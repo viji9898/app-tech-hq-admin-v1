@@ -1,41 +1,16 @@
-import { Link } from "react-router-dom";
+import { useContext } from "react";
 
 // Auth Control
-import netlifyIdentity from "netlify-identity-widget";
+import { AuthContext } from "../utils/authContext";
 
 export const LandingPage = () => {
-  netlifyIdentity.init({});
-
+  const { user } = useContext(AuthContext);
+  console.log(user);
   return (
-    <div style={{ margin: "15px" }}>
+    <div style={{ margin: "15px", display: "block" }}>
       <p>tech-hq-admin Console</p>
-      <button
-        onClick={() => {
-          netlifyIdentity.open();
-        }}
-      >
-        Login
-      </button>
-      <ul>
-        <li>
-          <Link
-            to={{
-              pathname: `/admin-dashboard`,
-            }}
-          >
-            {"Super Admin Dashboard"}
-          </Link>
-        </li>
-        <li>
-          <Link
-            to={{
-              pathname: `/editor-dashboard`,
-            }}
-          >
-            {"Editor Dashboard"}
-          </Link>
-        </li>
-      </ul>
+      <p>User:{user ? user.email : "no user"}</p>
+      <p>User Role:{user ? user.app_metadata.roles : "no user"}</p>
     </div>
   );
 };
